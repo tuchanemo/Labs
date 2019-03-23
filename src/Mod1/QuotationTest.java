@@ -7,7 +7,7 @@ package Mod1;
 
 /**
  * Test class for module 1
- * @author Taurus
+ * @author Alex
  */
 public class QuotationTest {
     
