@@ -17,7 +17,7 @@ public class QuotationTest {
      */
     public static void main(String[] args) {
         Quotation.DisplayQuotation("Confucius", "Wherever you go, go with all your heart");
-        //Quotation.DisplayQuotation(args[0], args[1]);
+        Quotation.DisplayQuotation(args[0], args[1]);
     }
     
 }
