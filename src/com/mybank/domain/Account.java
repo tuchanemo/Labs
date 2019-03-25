@@ -59,7 +59,6 @@ public class Account {
 
     /**
      * Method to check account balance В
-     *
      * @return the balance
      */
     public double getBalance() {
