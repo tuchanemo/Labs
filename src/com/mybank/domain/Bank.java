@@ -2,24 +2,29 @@ package com.mybank.domain;
 
 public class Bank {
 
-    private Customer[] customers;
+    private static Customer[] customers= new Customer[1000];
     
-    private int numOfClients;
+    private static int numOfClients=0;
 
-    public Bank() {
-        customers = new Customer[1000];
-        numOfClients = 0;
+    private Bank() {
+        
     }
 
-    public Customer getCustomer(int cusNo) {
+    public static Customer getCustomer(int cusNo) {
         if (cusNo < customers.length) {
             return customers[cusNo];
         }
         return null;
     }
 
-    public void addCustomer(Customer newCustomer) {
+    public static void addCustomer(Customer newCustomer) {
         customers[numOfClients]=newCustomer;
         numOfClients++;
     }
+
+    public static int getNumOfClients() {
+        return numOfClients;
+    }
+         
+             
 }
