@@ -18,7 +18,6 @@ import com.mybank.domain.SavingsAccount;
 public class TestAccount {
 
     public static void main(String[] args) {
-        Bank myBank = new Bank();
         
         Customer firstCustomer = new Customer("John Doe");
         Customer secondCustomer = new Customer("Jane Doe");
@@ -29,17 +28,19 @@ public class TestAccount {
         firstCustomer.addAccount(johnSavings);
         firstCustomer.addAccount(johnAccount);
         secondCustomer.addAccount(janeAccount);
-        myBank.addCustomer(firstCustomer);
-        myBank.addCustomer(secondCustomer);
+        Bank.addCustomer(firstCustomer);
+        Bank.addCustomer(secondCustomer);
 
-        System.out.println(myBank.getCustomer(0));
-        myBank.getCustomer(0).getAccount(0).deposit(2000);
-        myBank.getCustomer(0).getAccount(1).withdraw(5500);
-        ((SavingsAccount)myBank.getCustomer(0).getAccount(0)).addInterestRate();
+        System.out.println(Bank.getCustomer(0));
+        System.out.println(Bank.getCustomer(1));
         
-        System.out.println(myBank.getCustomer(0).getAccount(0).getBalance());
-        System.out.println(myBank.getCustomer(0).getAccount(1).getBalance());
+        Bank.getCustomer(0).getAccount(0).deposit(2000);
+        Bank.getCustomer(0).getAccount(1).withdraw(5500);
+        ((SavingsAccount)Bank.getCustomer(0).getAccount(0)).addInterestRate();
+//        System.out.println("");
         
-        System.out.println(myBank.getCustomer(1));
+        System.out.println(Bank.getCustomer(0));
+        System.out.println(Bank.getCustomer(1));
+        
     }
 }
