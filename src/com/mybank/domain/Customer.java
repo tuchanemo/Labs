@@ -42,6 +42,7 @@ public class Customer {
         return s;
     }
 
+    
     public void addAccount(Account acc) {
         accounts[numOfAccounts] = acc;
         numOfAccounts++;
