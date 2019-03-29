@@ -5,7 +5,9 @@
  */
 package Mod4;
 
+import animals.Animal;
 import animals.Cat;
+import animals.Spider;
 
 /**
  *
@@ -14,7 +16,7 @@ import animals.Cat;
 public class TestEnimals {
 
     static Cat myCat = new Cat("Tiger");
-    static Cat otherCat = new Cat();
+    static Animal mySpider = new Spider();
 
     public static void main(String[] args) {
         myCat.setName("Toyger");

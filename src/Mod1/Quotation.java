@@ -20,5 +20,6 @@ public class Quotation {
     {
         System.out.println(author+ " says: "+"\n\t'"+quotation+"'"); //to show quotation on the new line with indent
     }
+    // Проверка
     
 }

@@ -17,5 +17,5 @@ public class SavingsAccount extends Account {
         return interestRate;
     }
 
-    
+    // Проверка
 }
