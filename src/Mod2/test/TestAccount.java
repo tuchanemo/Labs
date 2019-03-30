@@ -19,6 +19,8 @@ public class TestAccount {
 
     public static void main(String[] args) {
         
+        Bank newBank = Bank.getBank();
+        
         Customer firstCustomer = new Customer("John Doe");
         Customer secondCustomer = new Customer("Jane Doe");
 
@@ -28,19 +30,19 @@ public class TestAccount {
         firstCustomer.addAccount(johnSavings);
         firstCustomer.addAccount(johnAccount);
         secondCustomer.addAccount(janeAccount);
-        Bank.addCustomer(firstCustomer);
-        Bank.addCustomer(secondCustomer);
+        newBank.addCustomer(firstCustomer);
+        newBank.addCustomer(secondCustomer);
 
-        System.out.println(Bank.getCustomer(0));
-        System.out.println(Bank.getCustomer(1));
+        System.out.println(newBank.getCustomer(0));
+        System.out.println(newBank.getCustomer(1));
         
-        Bank.getCustomer(0).getAccount(0).deposit(2000);
-        Bank.getCustomer(0).getAccount(1).withdraw(5500);
-        ((SavingsAccount)Bank.getCustomer(0).getAccount(0)).addInterestRate();
+        newBank.getCustomer(0).getAccount(0).deposit(2000);
+        newBank.getCustomer(0).getAccount(1).withdraw(5500);
+        ((SavingsAccount)newBank.getCustomer(0).getAccount(0)).addInterestRate();
 //        System.out.println("");
         
-        System.out.println(Bank.getCustomer(0));
-        System.out.println(Bank.getCustomer(1));
+        System.out.println(newBank.getCustomer(0));
+        System.out.println(newBank.getCustomer(1));
         
     }
 }
