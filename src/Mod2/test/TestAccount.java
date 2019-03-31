@@ -36,7 +36,7 @@ public class TestAccount {
         bank.addCustomer(firstCustomer);
         bank.addCustomer(secondCustomer);
 
-        getBank(bank);
+        displayCustomers(bank);
         
         bank.getCustomer(0).getAccount(0).deposit(2000);
         try {
@@ -53,11 +53,11 @@ public class TestAccount {
         ((SavingsAccount)bank.getCustomer(0).getAccount(0)).addInterestRate();
 //        System.out.println("");
         
-        getBank(bank);
+        displayCustomers(bank);
         
     }
 
-    private static void getBank(Bank bank) {
+    private static void displayCustomers(Bank bank) {
         System.out.println(bank.getCustomer(0));
         System.out.println(bank.getCustomer(1));
     }
