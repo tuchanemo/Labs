@@ -40,7 +40,7 @@ public class TestAccount {
         
         bank.getCustomer(0).getAccount(0).deposit(2000);
         try {
-            bank.getCustomer(0).getAccount(1).withdraw(5500);
+            bank.getCustomer(0).getAccount(1).withdraw(7500);
         }
         
         catch (OverdraftException ex) {

@@ -13,7 +13,6 @@ public class CheckingAccount extends Account {
         this(initBalance, 0);
     }
 
-    @Override
     public boolean withdraw(double amt) throws OverdraftException {
         if (amt <= balance + overdraftAmount) {
             balance = balance - amt;
