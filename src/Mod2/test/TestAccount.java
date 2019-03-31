@@ -9,7 +9,10 @@ import com.mybank.domain.Account;
 import com.mybank.domain.Bank;
 import com.mybank.domain.CheckingAccount;
 import com.mybank.domain.Customer;
+import com.mybank.domain.OverdraftException;
 import com.mybank.domain.SavingsAccount;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -19,7 +22,7 @@ public class TestAccount {
 
     public static void main(String[] args) {
         
-        Bank newBank = Bank.getBank();
+        Bank bank = Bank.getBank();
         
         Customer firstCustomer = new Customer("John Doe");
         Customer secondCustomer = new Customer("Jane Doe");
@@ -30,19 +33,32 @@ public class TestAccount {
         firstCustomer.addAccount(johnSavings);
         firstCustomer.addAccount(johnAccount);
         secondCustomer.addAccount(janeAccount);
-        newBank.addCustomer(firstCustomer);
-        newBank.addCustomer(secondCustomer);
+        bank.addCustomer(firstCustomer);
+        bank.addCustomer(secondCustomer);
 
-        System.out.println(newBank.getCustomer(0));
-        System.out.println(newBank.getCustomer(1));
+        getBank(bank);
         
-        newBank.getCustomer(0).getAccount(0).deposit(2000);
-        newBank.getCustomer(0).getAccount(1).withdraw(5500);
-        ((SavingsAccount)newBank.getCustomer(0).getAccount(0)).addInterestRate();
+        bank.getCustomer(0).getAccount(0).deposit(2000);
+        try {
+            bank.getCustomer(0).getAccount(1).withdraw(5500);
+        }
+        
+        catch (OverdraftException ex) {
+            System.out.println(ex.getMessage()+": $"+ex.getDeficit()+"!\n");
+        }
+        
+        catch (Exception ex) {
+            System.out.println("Something went wrong"+ex.getMessage());
+        }
+        ((SavingsAccount)bank.getCustomer(0).getAccount(0)).addInterestRate();
 //        System.out.println("");
         
-        System.out.println(newBank.getCustomer(0));
-        System.out.println(newBank.getCustomer(1));
+        getBank(bank);
         
+    }
+
+    private static void getBank(Bank bank) {
+        System.out.println(bank.getCustomer(0));
+        System.out.println(bank.getCustomer(1));
     }
 }
