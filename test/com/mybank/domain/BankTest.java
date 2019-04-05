@@ -17,7 +17,11 @@ import static org.junit.Assert.*;
  * @author Alex
  */
 public class BankTest {
-    
+    Bank bank = Bank.getBank();
+        
+    Customer firstCustomer = new Customer("John Doe");
+    Customer secondCustomer = new Customer("Jane Doe");
+
     public BankTest() {
     }
     
@@ -31,6 +35,14 @@ public class BankTest {
     
     @Before
     public void setUp() {
+        SavingsAccount johnSavings = new SavingsAccount(1000, 5);
+        CheckingAccount johnAccount = new CheckingAccount(5000, 1000);
+        CheckingAccount janeAccount = new CheckingAccount(500, 100);
+        firstCustomer.addAccount(johnSavings);
+        firstCustomer.addAccount(johnAccount);
+        secondCustomer.addAccount(janeAccount);
+        bank.addCustomer(firstCustomer);
+        bank.addCustomer(secondCustomer);
     }
     
     @After
@@ -42,12 +54,10 @@ public class BankTest {
      */
     @Test
     public void testGetBank() {
-        System.out.println("getBank");
-        Bank expResult = null;
+        System.out.println("getBank - only one instance of Bank");
+        Bank expResult = bank;
         Bank result = Bank.getBank();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -57,12 +67,10 @@ public class BankTest {
     public void testGetCustomer() {
         System.out.println("getCustomer");
         int cusNo = 0;
-        Bank instance = null;
-        Customer expResult = null;
+        Bank instance = bank;
+        Customer expResult = firstCustomer;
         Customer result = instance.getCustomer(cusNo);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**

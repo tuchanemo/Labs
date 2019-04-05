@@ -16,9 +16,9 @@ import static org.junit.Assert.*;
  *
  * @author Alex
  */
-public class CheckingAccountTest {
+public class OverdraftExceptionTest {
     
-    public CheckingAccountTest() {
+    public OverdraftExceptionTest() {
     }
     
     @BeforeClass
@@ -38,29 +38,14 @@ public class CheckingAccountTest {
     }
 
     /**
-     * Test of withdraw method, of class CheckingAccount.
+     * Test of getDeficit method, of class OverdraftException.
      */
     @Test
-    public void testWithdraw() {
-        System.out.println("withdraw");
-        double amt = 0.0;
-        CheckingAccount instance = null;
-        boolean expResult = false;
-        boolean result = instance.withdraw(amt);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getOverdraftAmount method, of class CheckingAccount.
-     */
-    @Test
-    public void testGetOverdraftAmount() {
-        System.out.println("getOverdraftAmount");
-        CheckingAccount instance = null;
+    public void testGetDeficit() {
+        System.out.println("getDeficit");
+        OverdraftException instance = null;
         double expResult = 0.0;
-        double result = instance.getOverdraftAmount();
+        double result = instance.getDeficit();
         assertEquals(expResult, result, 0.0);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
