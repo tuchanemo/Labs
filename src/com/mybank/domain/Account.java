@@ -8,13 +8,9 @@ package com.mybank.domain;
 /**
  * Bank Account class
  *
- * @author Alex
+ * @author Taurus
  */
 public class Account {
-
-    public Account() {
-        this.balance = 0;
-    }
 
     protected double balance;
 
@@ -31,10 +27,15 @@ public class Account {
         }
     }
 
+    public Account() {
+        this.balance = 0;
+    }
+
     /**
      * Method to add money to account
      *
      * @param amt a positive amount of money
+     * @return
      */
     public boolean deposit(double amt) {
         if (amt > 0) {
@@ -45,11 +46,11 @@ public class Account {
     }
 
     /**
-     * Method to withdraw money to account
+     * Method to withdraw money
      *
      * @param amt a positive amount of money
      */
-    public boolean withdraw(double amt) throws Exception {
+    public boolean withdraw(double amt) throws Exception{
         if (amt <= balance) {
             balance -= amt;
             return true;
@@ -58,7 +59,8 @@ public class Account {
     }
 
     /**
-     * Method to check account balance В
+     * Method to check account balance
+     *
      * @return the balance
      */
     public double getBalance() {

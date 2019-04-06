@@ -1,10 +1,25 @@
 package com.mybank.domain;
 
+import java.util.ArrayList;
+
 public class Customer {
 
-    private Account[] accounts;
+    private ArrayList<Account> accounts;
 
-    private String fullName;
+    private String firstName;
+    private String lastName;
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public int getNumOfAccounts() {
+        return numOfAccounts;
+    }
 
     private int customerNumber;
 
@@ -12,39 +27,40 @@ public class Customer {
 
     private int numOfAccounts;
 
-    public Customer(String fullName) {
-        accounts = new Account[10];
-        this.fullName = fullName;
+    public Customer(String firstName, String lastName) {
+        accounts = new ArrayList<>();
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.customerNumber = customerNumberBase++;
         this.numOfAccounts = 0;
     }
 
     public Account getAccount(int accNo) {
-        if (accNo < accounts.length && numOfAccounts != 0) {
-            return accounts[accNo];
+        if (accNo < accounts.size() && numOfAccounts != 0) {
+            return accounts.get(accNo);
         }
         return null;
     }
 
     @Override
     public String toString() {
-        String s = "Customer: " + "fullName=" + fullName + ", customerNumber=" + customerNumber + ", numofAccounts=" + numOfAccounts;
+        String s = "Customer :" + "fullName=" + lastName + ", "+firstName+", customerNumber=" + customerNumber + ", numOfAccounts=" + numOfAccounts;
         for (int i = 0; i < this.numOfAccounts; i++) {
-            Account acc = getAccount(i);
-            if (acc instanceof SavingsAccount) {
-                s = s + "\n\t" + (i + 1) + " Saving account with interest rate %" + ((SavingsAccount) acc).getInterestRate();
+            if (getAccount(i) instanceof SavingsAccount) {
+                s = s + "\n Savings Account with interest rate " + ((SavingsAccount) getAccount(i)).getInterestRate() + "%";
             } else {
-                s = s + "\n\t" + (i + 1) + " Checking account with overdaft $" + ((CheckingAccount) acc).getOverdraftAmount();
+                s = s + "\n Checking Account with overdraft $" + ((CheckingAccount) getAccount(i)).getOverdraftAmount();
             }
-            s = s + " balance $" + acc.getBalance();
+            s = s + ", balance $" + getAccount(i).getBalance();
         }
-        s = s + "\n";
+
         return s;
+
     }
 
-    
     public void addAccount(Account acc) {
-        accounts[numOfAccounts] = acc;
+        accounts.add(acc);
         numOfAccounts++;
     }
+
 }

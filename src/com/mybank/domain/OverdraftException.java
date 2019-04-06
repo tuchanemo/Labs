@@ -7,9 +7,9 @@ package com.mybank.domain;
 
 /**
  *
- * @author Alex
+ * @author Taurus
  */
-public class OverdraftException extends Exception {
+public class OverdraftException extends Exception{
     private double deficit;
 
     public double getDeficit() {
@@ -20,7 +20,6 @@ public class OverdraftException extends Exception {
         super(message);
         this.deficit = deficit;
     }
-    
     
     
 }
