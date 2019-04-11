@@ -8,7 +8,7 @@ package com.mybank.ATM;
 import com.mybank.domain.*;
 /**
  *
- * @author alex
+ * @author alex 
  */
 public class mybankATM extends javax.swing.JFrame {
 
