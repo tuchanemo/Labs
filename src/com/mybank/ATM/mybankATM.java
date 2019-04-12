@@ -6,17 +6,53 @@
 package com.mybank.ATM;
 
 import com.mybank.domain.*;
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
+
 /**
  *
- * @author alex 
+ * @author alex
  */
 public class mybankATM extends javax.swing.JFrame {
+
+    Bank bank;
+    Customer currentCustomer;
+    Account currentAccount;
 
     /**
      * Creates new form mybankATM
      */
     public mybankATM() {
+
+        bank = Bank.getBank();
+
+        Customer firstCustomer = new Customer("John", "Doe");
+        Customer secondCustomer = new Customer("Jane", "Doe");
+
+        SavingsAccount johnSavings = new SavingsAccount(1000, 5);
+        CheckingAccount johnAccount = new CheckingAccount(5000, 1000);
+        CheckingAccount janeAccount = new CheckingAccount(500, 100);
+        firstCustomer.addAccount(johnSavings);
+        firstCustomer.addAccount(johnAccount);
+        secondCustomer.addAccount(janeAccount);
+        bank.addCustomer(firstCustomer);
+        bank.addCustomer(secondCustomer);
+
+        this.setLocationRelativeTo(null);
+
         initComponents();
+
+        //Обработчик кнопок
+        for (Component c : jPanel3.getComponents()) {
+            if ((c.getClass() == JButton.class) && (((JButton) c).getText() != "ENTER")) {
+                JButton currentButton = (JButton) c;
+                currentButton.addActionListener((ActionEvent e) -> {
+                    addDigit(e);
+                });
+            }
+        }
     }
 
     /**
@@ -67,6 +103,11 @@ public class mybankATM extends javax.swing.JFrame {
         jPanel2.add(withdrawButton);
 
         amountField.setToolTipText("");
+        amountField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                amountFieldActionPerformed(evt);
+            }
+        });
         jPanel2.add(amountField);
 
         jPanel1.add(jPanel2);
@@ -112,6 +153,11 @@ public class mybankATM extends javax.swing.JFrame {
         jPanel3.add(pointButton);
 
         enterButton.setText("ENTER");
+        enterButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                enterButtonActionPerformed(evt);
+            }
+        });
         jPanel3.add(enterButton);
 
         jPanel1.add(jPanel3);
@@ -126,7 +172,7 @@ public class mybankATM extends javax.swing.JFrame {
         getContentPane().add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
         statusField.setEditable(false);
-        statusField.setText("Welcome to my Bank!");
+        statusField.setText("Welcome to my Bank! Enter the client ID and press ENTER...");
         getContentPane().add(statusField, java.awt.BorderLayout.PAGE_END);
 
         pack();
@@ -135,6 +181,23 @@ public class mybankATM extends javax.swing.JFrame {
     private void zeroButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zeroButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_zeroButtonActionPerformed
+
+    private void enterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enterButtonActionPerformed
+        // TODO add your handling code here:
+        int customerID = Integer.parseInt(amountField.getText());
+        currentCustomer = bank.getCustomer(customerID);
+        historyArea.append("Customer with ID = " + customerID + " is " + currentCustomer.getLastName() + ", " + currentCustomer.getFirstName());
+        amountField.setText("");
+    }//GEN-LAST:event_enterButtonActionPerformed
+
+    private void amountFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_amountFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_amountFieldActionPerformed
+
+    private void addDigit(ActionEvent evt) {
+        // TODO add your handling code here:
+        amountField.setText(amountField.getText() + ((JButton) evt.getSource()).getText());
+    }
 
     /**
      * @param args the command line arguments
@@ -162,8 +225,6 @@ public class mybankATM extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(mybankATM.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
-        
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
