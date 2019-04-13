@@ -303,8 +303,11 @@ public class mybankATM extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> {
-            new mybankATM().setVisible(true);
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new mybankATM().setVisible(true);
+            }
         });
     }
 
