@@ -16,7 +16,7 @@ import javax.swing.JButton;
  * @author alex
  */
 public class mybankATM extends javax.swing.JFrame {
-
+    
     Bank bank;
     Customer currentCustomer;
     Account currentAccount;
@@ -25,12 +25,12 @@ public class mybankATM extends javax.swing.JFrame {
      * Creates new form mybankATM
      */
     public mybankATM() {
-
+        
         bank = Bank.getBank();
-
+        
         Customer firstCustomer = new Customer("John", "Doe");
         Customer secondCustomer = new Customer("Jane", "Doe");
-
+        
         SavingsAccount johnSavings = new SavingsAccount(1000, 5);
         CheckingAccount johnAccount = new CheckingAccount(5000, 1000);
         CheckingAccount janeAccount = new CheckingAccount(500, 100);
@@ -39,9 +39,9 @@ public class mybankATM extends javax.swing.JFrame {
         secondCustomer.addAccount(janeAccount);
         bank.addCustomer(firstCustomer);
         bank.addCustomer(secondCustomer);
-
+        
         this.setLocationRelativeTo(null);
-
+        
         initComponents();
 
         //Обработчик кнопок
@@ -88,18 +88,38 @@ public class mybankATM extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("my Bank ATM");
+        setPreferredSize(new java.awt.Dimension(851, 304));
+        setSize(new java.awt.Dimension(851, 304));
 
         jPanel1.setLayout(new java.awt.GridLayout(2, 1));
 
         jPanel2.setLayout(new java.awt.GridLayout(4, 1));
 
         balanceButton.setText("Check account balance");
+        balanceButton.setEnabled(false);
+        balanceButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                balanceButtonActionPerformed(evt);
+            }
+        });
         jPanel2.add(balanceButton);
 
         depositButton.setText("Make a deposit");
+        depositButton.setEnabled(false);
+        depositButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                depositButtonActionPerformed(evt);
+            }
+        });
         jPanel2.add(depositButton);
 
         withdrawButton.setText("Make a withdrawal");
+        withdrawButton.setEnabled(false);
+        withdrawButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                withdrawButtonActionPerformed(evt);
+            }
+        });
         jPanel2.add(withdrawButton);
 
         amountField.setToolTipText("");
@@ -184,16 +204,72 @@ public class mybankATM extends javax.swing.JFrame {
 
     private void enterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enterButtonActionPerformed
         // TODO add your handling code here:
-        int customerID = Integer.parseInt(amountField.getText());
-        currentCustomer = bank.getCustomer(customerID);
-        historyArea.append("Customer with ID = " + customerID + " is " + currentCustomer.getLastName() + ", " + currentCustomer.getFirstName());
+        int customerID = 0;
+        try {
+            customerID = Integer.parseInt(amountField.getText());
+            currentCustomer = bank.getCustomer(customerID);
+            currentAccount = currentCustomer.getAccount(0);
+            historyArea.append("Customer with ID = " + customerID + " is " + currentCustomer.getLastName() + ", " + currentCustomer.getFirstName() + "\n");
+            balanceButton.setEnabled(true);
+            depositButton.setEnabled(true);
+            withdrawButton.setEnabled(true);
+            enterButton.setEnabled(false);
+            
+        } catch (Exception e) {
+            historyArea.append("ERROR: Customer not found or wrong Customer ID!\n");
+        }
+        
         amountField.setText("");
+        statusField.setText("Customer: " + currentCustomer.getLastName() + ", " + currentCustomer.getFirstName());
     }//GEN-LAST:event_enterButtonActionPerformed
 
     private void amountFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_amountFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_amountFieldActionPerformed
 
+    private void balanceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_balanceButtonActionPerformed
+        // TODO add your handling code here:
+        historyArea.append("Balance of " + currentCustomer.getFirstName() + "'s first account is $" + currentAccount.getBalance());
+        if (currentAccount instanceof CheckingAccount) {
+            historyArea.append(". This is a Checking Account with overdraft protection $" + ((CheckingAccount) currentAccount).getOverdraftAmount() + "\n");
+        } else {
+            historyArea.append(". This is a Saving Account with interest rate " + ((SavingsAccount) currentAccount).getInterestRate() + "%\n");
+        }
+        statusField.setText("READY");
+    }//GEN-LAST:event_balanceButtonActionPerformed
+
+    private void depositButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_depositButtonActionPerformed
+        // TODO add your handling code here:
+        try {
+            double amt = Double.parseDouble(amountField.getText());
+            currentAccount.deposit(amt);
+            historyArea.append("Deposit: $" + amt + ", new balance is $" + currentAccount.getBalance() + "\n");
+            statusField.setText("READY");
+        } catch (Exception e) {
+            historyArea.append("ERROR: can't complete deposit operation!\n");
+            statusField.setText("ERROR");
+        }
+        amountField.setText("");
+    }//GEN-LAST:event_depositButtonActionPerformed
+
+    private void withdrawButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_withdrawButtonActionPerformed
+        // TODO add your handling code here:
+        try {
+            double amt = Double.parseDouble(amountField.getText());
+            if (currentAccount.withdraw(amt)) {
+                historyArea.append("Deposit: $" + amt + ", new balance is $" + currentAccount.getBalance() + "\n");
+                statusField.setText("READY");
+            }
+        } catch (OverdraftException ex) {
+            historyArea.append("ERROR: insufficient funds!\n");
+        } catch (Exception e) {
+            historyArea.append("ERROR: can't complete withdraw operation!\n");
+            statusField.setText("ERROR");
+        }
+        amountField.setText("");
+        statusField.setText("ERROR");
+    }//GEN-LAST:event_withdrawButtonActionPerformed
+    
     private void addDigit(ActionEvent evt) {
         // TODO add your handling code here:
         amountField.setText(amountField.getText() + ((JButton) evt.getSource()).getText());
